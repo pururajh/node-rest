@@ -2,27 +2,31 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
+const cors = require('cors');
+const mongo = require('mongodb');
 
 //routers for the app
-const prodRoute = require('./api/routes/product');
-const orderRoute = require('./api/routes/order');
+const prodRoute = require('./src/api/routes/product');
+const orderRoute = require('./src/api/routes/order');
 
 app.use(morgan('dev'));
+app.use(cors());
+app.options('*', cors());
 //body parser should be used before router. 
 //if you use after it might say undeficed while reading body propertues
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
 
-app.use((req, res, next)=>{
+/*app.use((req, res, next)=>{
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", 
-    "Origin, X-Requestd-With, Content-Type, Accept, Authorization");
+    "Origin, Content-Type, Accept, Authorization");
     if(req.method == 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, PUT');
         return res.status(200).json({});
     }
 
-});
+});*/
 
 app.use('/product', prodRoute);
 app.use('/order', orderRoute);
