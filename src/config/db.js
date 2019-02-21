@@ -1,9 +1,8 @@
-/*const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const getConfig = require('./config');
-const config = getConfig(process.env.NODE_ENV);
-//mongoose.
-const connect = () => mongoose.connect(config.MONGO_URI);
-module.exports = connect;*/
+//const config = getConfig(process.env.NODE_ENV);
+const connect = () => mongoose.connect(getConfig().MONGO_URI, {useNewUrlParser:true});
+module.exports = connect;
 
 /*const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/practice');

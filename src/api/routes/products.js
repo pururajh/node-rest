@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const mongo = require('../../config/mongodb.js');
-
+const AuthCheck = require('../middleware/auth-check');
 const Product = require('../module/product.js');
 
-router.get('/', (req, res, next)=>{
+router.get('/', AuthCheck, (req, res, next)=>{
     Product.find().exec().then(doc => {
         console.log('Find all data',doc);
         if(doc.length>=0){
@@ -19,13 +18,13 @@ router.get('/', (req, res, next)=>{
     .catch(err => {
         console.log(err);
         res.status(500).json(doc);
-    })
+    });
     /*res.status(200).json({
         message: 'Get request invoked'
     })*/
 });
 
-router.get('/:prodId', (req, res, next)=>{
+router.get('/:prodId', AuthCheck, (req, res, next)=>{
     const prodId = req.params.prodId;
     Product.findById(prodId).exec()
     .then(doc => {
@@ -38,7 +37,7 @@ router.get('/:prodId', (req, res, next)=>{
     });
 });
 
-router.post('/', (req, res, next)=>{
+router.post('/', AuthCheck, (req, res, next)=>{
     /*const prod = {
         prodcd: req.body.prodcd,
         name: req.body.name,
@@ -66,7 +65,7 @@ router.post('/', (req, res, next)=>{
     });
 });
 
-router.patch('/:prodId', (req, res, next)=>{
+router.patch('/:prodId', AuthCheck, (req, res, next)=>{
     const id = req.params.prodId;
     const updateOps = {};
     for( const ops of req.body){
@@ -89,7 +88,7 @@ router.patch('/:prodId', (req, res, next)=>{
     })*/
 });
 
-router.delete('/:prodId', (req, res, next)=>{
+router.delete('/:prodId', AuthCheck, (req, res, next)=>{
     const id = req.params.prodId;
     Product.remove({_id:id}).exec().then(result => {
         console.log('Deleting data from mongo',result); 

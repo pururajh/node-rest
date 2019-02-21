@@ -3,15 +3,14 @@ const app = express();
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
-const mongo = require('mongodb');
-const mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost:27017/practice', {useNewUrlParser:true});
- 
+const db = require('./src/config/db');
+/*DB connect*/
+db().connect;
 
 //routers for the app
 const prodRoute = require('./src/api/routes/products');
 const orderRoute = require('./src/api/routes/orders');
+const userRoute = require('./src/api/routes/users')
 
 app.use(morgan('dev'));
 app.use(cors());
@@ -34,6 +33,7 @@ app.use(bodyparser.json());
 
 app.use('/product', prodRoute);
 app.use('/order', orderRoute);
+app.use('/user', userRoute);
 
 //if above routes not found, can be used to check sanity too
 app.use((req, res, next)=>{

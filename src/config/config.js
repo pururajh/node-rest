@@ -1,14 +1,11 @@
 const config = {
     production: {
         secret: process.env.secret,
-        MONGO_URI: process.env.MONGO_URI,
-        port: process.env.port
+        MONGO_URI: process.env.MONGO_URI
     }, development: {
-        secret: '',
-        MONGO_URI: 'mongodb://localhost:27017/practice',
-        port: ''
+        secret: 'secret',
+        MONGO_URI: 'mongodb://localhost:27017/practice'
     }
-
 };
 
 const getConfig = env => config[env] || config.development;
