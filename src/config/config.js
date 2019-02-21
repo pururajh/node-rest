@@ -11,4 +11,5 @@ const config = {
 
 };
 
-export const getConfig = env => config[env] || config.development;
+const getConfig = env => config[env] || config.development;
+module.exports = getConfig;

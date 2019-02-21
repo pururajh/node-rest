@@ -4,10 +4,14 @@ const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 const mongo = require('mongodb');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/practice', {useNewUrlParser:true});
+ 
 
 //routers for the app
-const prodRoute = require('./src/api/routes/product');
-const orderRoute = require('./src/api/routes/order');
+const prodRoute = require('./src/api/routes/products');
+const orderRoute = require('./src/api/routes/orders');
 
 app.use(morgan('dev'));
 app.use(cors());
